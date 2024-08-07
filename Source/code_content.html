@@ -1,0 +1,142 @@
+
+<details>
+    <summary>Click để xem nội dung file code</summary>
+    <pre><code>class CChiTiet:
+    def __init__(self):
+        self._MaSo = 0
+
+    def Nhap(self):
+        self._MaSo = input(&quot;Nhap ma so chi tiet: &quot;)
+
+    def Xuat(self):
+        print(&quot;Ma so chi tiet:&quot;, self._MaSo)
+
+    def TinhTien(self):
+        return 0
+
+    def TimKiem(self, ms: str):
+        if self._MaSo == ms:
+            return self
+        else:
+            return None
+
+class CChiTietDon(CChiTiet):
+    def __init__(self):
+        super().__init__()
+        self.__GiaTien = 0
+
+    def Nhap(self):
+        super().Nhap()
+        self.__GiaTien = float(input(&quot;Nhap gia tien chi tiet don: &quot;))
+
+    def Xuat(self):
+        print(&quot;La chi tiet don.&quot;)
+        super().Xuat()
+        print(&quot;Gia tien chi tiet don:&quot;, self.__GiaTien)
+
+    def TinhTien(self):
+        return self.__GiaTien
+
+    def TimKiem(self, ms):
+        return super().TimKiem(ms)
+
+
+class CChiTietPhuc(CChiTiet):
+    def __init__(self):
+        super().__init__()
+        self.__n = 0
+        self.__ds = []
+
+    def Nhap(self):
+        super().Nhap()
+        self.__n = int(input(&quot;Nhap so luong chi tiet thanh phan: &quot;))
+        for _ in range(self.__n):
+            type = int(input(&quot;Nhap loai (0. Don, 1. Phuc): &quot;))
+            temp = None
+            if type == 0:
+                temp = CChiTietDon()
+            else:
+                temp = CChiTietPhuc()
+            temp.Nhap()
+            self.__ds.append(temp)
+
+    def Xuat(self):
+        print(&quot;La chi tiet phuc.&quot;)
+        super().Xuat()
+        print(&quot;So luong chi tiet thanh phan cua chi tiet phuc:&quot;, self.__n)
+        for i,x in enumerate(self.__ds):
+            print(f&quot;Chi tiet thanh phan thu {i + 1} cua chi tiet phuc:&quot;, end = &#x27; &#x27;)
+            x.Xuat()
+
+    def TinhTien(self):
+        s = 0
+        for x in self.__ds:
+            s += x.TinhTien()
+        return s
+
+    def TimKiem(self, ms: str):
+        if self._MaSo == ms:
+            return self
+        for x in self.__ds:
+            if x.TimKiem(ms) != None:
+                return x.TimKiem(ms)
+        return None
+
+
+class CMay:
+    def __init__(self):
+        self.__n = 0
+        self.__ds = []
+
+    def Nhap(self):
+        self.__n = int(input(&quot;Nhap so luong thanh phan: &quot;))
+        for _ in range(self.__n):
+            temp = None
+            type = int(input(&quot;Nhap loai (0. Don, 1. Phuc): &quot;))
+            if type == 0:
+                temp = CChiTietDon()
+            else:
+                temp = CChiTietPhuc()
+            temp.Nhap()
+            self.__ds.append(temp)
+
+    def Xuat(self):
+        print(&quot;So luong chi tiet thanh phan cua may:&quot;, self.__n)
+        for i, x in enumerate(self.__ds):
+            print(f&quot;Chi tiet thanh phan thu {i + 1} cua chi tiet may:&quot;, end = &#x27; &#x27;)
+            x.Xuat()
+
+    def TinhTien(self):
+        s = 0
+        for x in self.__ds:
+            s += x.TinhTien()
+        return s
+
+    def TimKiem(self, ms: str):
+        for x in self.__ds:
+            if x.TimKiem(ms) != None:
+                return x.TimKiem(ms)
+        else:
+            return None
+
+
+def main():
+    May = CMay()
+    print(&quot;Nhap thong tin may:&quot;)
+    May.Nhap()
+    print(&quot;\nThong tin cua may:&quot;)
+    May.Xuat()
+    gia_tri_may = May.TinhTien()
+    print(&quot;\nGia tri cua may:&quot;, gia_tri_may)
+    ma_so_tim_kiem = input(&quot;\nNhap ma so chi tiet may can tim: &quot;)
+    kq = May.TimKiem(ma_so_tim_kiem)
+    if kq != None:
+        print(f&quot;Tim thay ma chi tiet: {ma_so_tim_kiem} trong may.&quot;)
+    else:
+        print(f&quot;Khong tim thay ma chi tiet {ma_so_tim_kiem} trong may.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+</details>
